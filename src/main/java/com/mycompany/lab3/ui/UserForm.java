@@ -5,9 +5,11 @@
 package com.mycompany.lab3.ui;
 
 import com.mycompany.lab3.model.User;
+import java.awt.Image;
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -284,7 +286,7 @@ public class UserForm extends javax.swing.JFrame {
         
 
         User user = new User(firstName, lastName, age, gender, phoneNumber, email,continent,experience, hobbies,filePath);
-        displayMessage(user.toString(), "Success");
+        displaySuccessMessage(user.toString(), "Success",user.getPhotoUrl());
 
     }//GEN-LAST:event_buttonSubmitActionPerformed
 
@@ -328,7 +330,24 @@ public class UserForm extends javax.swing.JFrame {
         return null; 
     }
     
-      private void displayMessage(String message, String header){
+    private void displaySuccessMessage(String message, String header,String photoUrl){
+             
+            ImageIcon originalIcon = new ImageIcon(photoUrl);
+            
+            
+        // 2. Extract the Image object and resize it (e.g., 100x100 pixels)
+            Image scaledImage = originalIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+
+            // 3. Create a new ImageIcon from the resized image
+            ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        
+            JOptionPane.showMessageDialog(this, message, header,
+                                           JOptionPane.INFORMATION_MESSAGE,resizedIcon);
+         
+    
+    }
+    private void displayMessage(String message, String header){
+         
         JOptionPane.showMessageDialog(this, message, header,
                                            JOptionPane.INFORMATION_MESSAGE);
     }
