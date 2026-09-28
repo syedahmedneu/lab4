@@ -1,0 +1,20 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.lab3;
+
+import com.mycompany.lab3.ui.UserForm;
+
+/**
+ *
+ * @author syedahmed
+ */
+public class Lab3 {
+
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+        
+        UserForm.main(args);
+    }
+}
