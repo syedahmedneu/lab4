@@ -2,19 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.lab3;
+package com.mycompany.lab4;
 
-import com.mycompany.lab3.ui.UserForm;
+import com.mycompany.lab4.ui.MainJFrame;
 
 /**
  *
  * @author syedahmed
  */
-public class Lab3 {
+public class Lab4 {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
         
-        UserForm.main(args);
+        MainJFrame.main(args);
     }
 }

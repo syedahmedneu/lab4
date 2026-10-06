@@ -1,32 +1,83 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.lab3.ui;
+package com.mycompany.lab4.ui;
 
-import com.mycompany.lab3.model.User;
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.optionalusertools.DateChangeListener;
+import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
+import com.mycompany.lab4.model.User;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.io.File;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Calendar;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+
 
 /**
  *
  * @author syedahmed
  */
-public class UserForm extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserForm.class.getName());
+public class UserFormPanel extends javax.swing.JPanel {
+
     private String filePath = null;
+    private long dateofBirth = -1;
+    private DatePicker datePicker = new DatePicker();
+
     /**
-     * Creates new form UserForm
+     * Creates new form UserFormPanel
      */
-    public UserForm() {
+    public UserFormPanel() {
         initComponents();
+        btnSelectDate.addActionListener(this::buttonSelectDatePerformed);
+        
+        datePicker.addDateChangeListener(new DateChangeListener(){
+            @Override
+            public void dateChanged(DateChangeEvent event) {
+                LocalDate selectedDate = event.getNewDate();
+                
+                if (selectedDate != null) {
+
+                
+                String standardStringDate = selectedDate.toString(); 
+
+                
+                dateofBirth = selectedDate.atStartOfDay(ZoneId.systemDefault())
+                                             .toInstant()
+                                             .toEpochMilli();
+
+
+                textDateofBirth.setText(standardStringDate);
+                
+                LocalDate today = LocalDate.now();
+
+                long todayLong = today.atStartOfDay(ZoneId.systemDefault())
+                      .toInstant()
+                      .toEpochMilli();
+                long days = (todayLong - dateofBirth)/(1000*60*60*24);
+                
+                spinnerAge.setValue((int)days/365);
+
+            }
+
+
+            }
+        });
     }
 
     /**
@@ -38,62 +89,75 @@ public class UserForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        buttonSubmit = new javax.swing.JButton();
-        buttonUpload = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        textFirstName = new javax.swing.JTextField();
-        spinnerAge = new javax.swing.JSpinner();
-        comboBoxContinent = new javax.swing.JComboBox<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        textExperience = new javax.swing.JTextArea();
-        textPhoneNumber = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         textLastName = new javax.swing.JTextField();
+        buttonSubmit = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        buttonUpload = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtHobbies = new javax.swing.JTextArea();
+        jLabel8 = new javax.swing.JLabel();
+        textFirstName = new javax.swing.JTextField();
         comboBoxGender = new javax.swing.JComboBox<>();
+        spinnerAge = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        comboBoxContinent = new javax.swing.JComboBox<>();
         txtemail = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        textExperience = new javax.swing.JTextArea();
         txtFilePath = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel2.setText("Last Name");
-
-        jLabel3.setText("Gender");
-
-        jLabel4.setText("Age");
-
-        jLabel5.setText("Phone Number");
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        textPhoneNumber = new javax.swing.JFormattedTextField();
+        jLabel11 = new javax.swing.JLabel();
+        textDateofBirth = new javax.swing.JTextField();
+        btnSelectDate = new javax.swing.JButton();
 
         jLabel6.setText("Continent");
+
+        jLabel1.setText("First Name");
 
         jLabel7.setText("Experience");
 
         buttonSubmit.setText("Submit");
         buttonSubmit.addActionListener(this::buttonSubmitActionPerformed);
 
+        jLabel9.setText("Hobbies");
+
         buttonUpload.setText("Upload");
         buttonUpload.addActionListener(this::buttonUploadActionPerformed);
+
+        txtHobbies.setColumns(20);
+        txtHobbies.setRows(5);
+        jScrollPane1.setViewportView(txtHobbies);
 
         jLabel8.setText("Photo");
 
         textFirstName.addActionListener(this::textFirstNameActionPerformed);
 
+        comboBoxGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
+
         spinnerAge.setDoubleBuffered(true);
 
+        jLabel2.setText("Last Name");
+
+        jLabel10.setText("Email");
+
         comboBoxContinent.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asia", "Africa", "Europe", "North America", "South America", "Antarctica", " " }));
+
+        jLabel3.setText("Gender");
 
         textExperience.setColumns(20);
         textExperience.setRows(5);
         jScrollPane3.setViewportView(textExperience);
+
+        jLabel4.setText("Age");
+
+        jLabel5.setText("Phone Number");
 
         try {
             textPhoneNumber.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-###-####")));
@@ -103,29 +167,20 @@ public class UserForm extends javax.swing.JFrame {
         textPhoneNumber.setToolTipText("123-123-1234");
         textPhoneNumber.addActionListener(this::textPhoneNumberActionPerformed);
 
-        jLabel1.setText("First Name");
+        jLabel11.setText("Date of Birth");
 
-        jLabel9.setText("Hobbies");
+        btnSelectDate.setText("Select Date");
+        btnSelectDate.setToolTipText("");
+        btnSelectDate.setActionCommand("");
 
-        txtHobbies.setColumns(20);
-        txtHobbies.setRows(5);
-        jScrollPane1.setViewportView(txtHobbies);
-
-        comboBoxGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
-
-        jLabel10.setText("Email");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(205, 205, 205)
                         .addComponent(buttonSubmit))
@@ -133,7 +188,6 @@ public class UserForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel10)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7))
@@ -141,26 +195,39 @@ public class UserForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboBoxContinent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboBoxGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spinnerAge, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(textLastName, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textFirstName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(txtemail, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textPhoneNumber, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
+                                .addComponent(textPhoneNumber, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(txtFilePath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGap(18, 18, 18)
                                     .addComponent(buttonUpload))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(235, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel11))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboBoxGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spinnerAge, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(textLastName, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(textFirstName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(textDateofBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSelectDate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -177,6 +244,11 @@ public class UserForm extends javax.swing.JFrame {
                     .addComponent(spinnerAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(textDateofBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelectDate, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(textPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -198,17 +270,15 @@ public class UserForm extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addGap(73, 73, 73))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel8)
                     .addComponent(buttonUpload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtFilePath, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtFilePath, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(buttonSubmit)
-                .addGap(17, 17, 17))
+                .addGap(53, 53, 53))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSubmitActionPerformed
@@ -219,7 +289,8 @@ public class UserForm extends javax.swing.JFrame {
         String experience = textExperience.getText();
         String hobbies = txtHobbies.getText();
         String email = txtemail.getText();
-        int age = (int) spinnerAge.getValue();
+        String dob = textDateofBirth.getText();
+        long age = (int) spinnerAge.getValue();
         String gender = comboBoxGender.getSelectedItem().toString();
         String continent = comboBoxContinent.getSelectedItem().toString();
 
@@ -237,12 +308,11 @@ public class UserForm extends javax.swing.JFrame {
             displayMessage("Please Enter Phone Number","Validation Error");
             return;
         }
-        
+
         if (phoneNumber.replace("-","").trim().isEmpty()){
             displayMessage("Please Enter valid Phone Number","Validation Error");
             return;
         }
-        
 
         if(isNullorEmpty(experience)){
             displayMessage("Please provide the experience","Validation Error");
@@ -259,11 +329,11 @@ public class UserForm extends javax.swing.JFrame {
             return;
         }
         Pattern EMAIL_PATTERN = Pattern.compile(
-        "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"
+            "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"
         );
 
         Matcher matcher = EMAIL_PATTERN.matcher(email);
-        
+
         if (!matcher.matches()){
             displayMessage("Please provide valid Email","Validation Error");
             return;
@@ -273,22 +343,57 @@ public class UserForm extends javax.swing.JFrame {
             displayMessage("Please provide some of your hobbies","Validation Error");
             return;
         }
+        
+        if(isNullorEmpty(dob)){
+            displayMessage("Please provide some of your Date of Birth","Validation Error");
+            return;
+        }
 
         if(age <= 0){
             displayMessage("Please provide valid age","Validation Error");
             return;
         }
-        
+
         if (isNullorEmpty(filePath)){
             displayMessage("Please select Picture","Validation Error");
             return;
         }
+
+//        User user = new User(filePath);
+        User user = new User(firstName, lastName, age, gender, phoneNumber, email,continent,experience, hobbies,filePath,dateofBirth);
+//        displaySuccessMessage(user.toString(), "Success",user.getPhotoUrl());
+        MainJFrame mainFrame = (MainJFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         
-
-        User user = new User(firstName, lastName, age, gender, phoneNumber, email,continent,experience, hobbies,filePath);
-        displaySuccessMessage(user.toString(), "Success",user.getPhotoUrl());
-
+        if (mainFrame != null) {
+            mainFrame.getViewUserPanel().setUserData(user);
+            mainFrame.switchCard("view user details Panel"); 
+        }
     }//GEN-LAST:event_buttonSubmitActionPerformed
+
+    private void buttonUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUploadActionPerformed
+        // TODO add your handling code here:
+        filePath = uploadFile();
+        txtFilePath.setText(filePath);
+    }//GEN-LAST:event_buttonUploadActionPerformed
+
+    private void buttonSelectDatePerformed(java.awt.event.ActionEvent evt) {                                             
+       EventQueue.invokeLater(new Runnable(){
+           @Override
+           public void run() {
+       
+                add(datePicker);
+
+                revalidate();
+                repaint();
+                datePicker.openPopup();
+                   
+                datePicker.setVisible(true);
+           }
+       });
+
+    }           
+    
+    
 
     private void textFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFirstNameActionPerformed
         // TODO add your handling code here:
@@ -298,13 +403,7 @@ public class UserForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_textPhoneNumberActionPerformed
 
-    private void buttonUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUploadActionPerformed
-        // TODO add your handling code here:
-        filePath = uploadFile();
-        txtFilePath.setText(filePath);
-
-    }//GEN-LAST:event_buttonUploadActionPerformed
-
+    
     
     private String uploadFile(){
        
@@ -356,38 +455,16 @@ public class UserForm extends javax.swing.JFrame {
         return text == null || text.isEmpty();
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new UserForm().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSelectDate;
     private javax.swing.JButton buttonSubmit;
     private javax.swing.JButton buttonUpload;
     private javax.swing.JComboBox<String> comboBoxContinent;
     private javax.swing.JComboBox<String> comboBoxGender;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -399,6 +476,7 @@ public class UserForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner spinnerAge;
+    private javax.swing.JTextField textDateofBirth;
     private javax.swing.JTextArea textExperience;
     private javax.swing.JTextField textFirstName;
     private javax.swing.JTextField textLastName;

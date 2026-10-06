@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.lab3.model;
+package com.mycompany.lab4.model;
 
 /**
  *
@@ -19,8 +19,15 @@ public class User {
     private String experience;
     private String hobbies;
     private String photoUrl;
+    private long dob;
 
-    public User(String firstName, String lastName, long age, String gender, String phoneNumber, String email, String continent, String experience, String hobbies, String photoUrl) {
+    public User(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    
+    
+    public User(String firstName, String lastName, long age, String gender, String phoneNumber, String email, String continent, String experience, String hobbies, String photoUrl, long dob) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -31,6 +38,7 @@ public class User {
         this.experience = experience;
         this.hobbies = hobbies;
         this.photoUrl = photoUrl;
+        this.dob = dob;
     }
 
     
@@ -115,6 +123,16 @@ public class User {
         this.photoUrl = photoUrl;
     }
 
+    public long getDob() {
+        return dob;
+    }
+
+    public void setDob(long dob) {
+        this.dob = dob;
+    }
+    
+    
+
     @Override
     public String toString() {
         String[] fileName = photoUrl.split("/");
@@ -122,7 +140,8 @@ public class User {
         return "First Name=" + firstName + "\nLast Name=" + lastName + "\nGender=" + gender 
                 + "\nAge=" + age + "\nPhone Number=" + phoneNumber + "\nEmail=" + email 
                 + "\nContinent=" + continent + "\nExperience=" + experience + "\nHobbies=" + hobbies
-                + "\nPhoto=" + fileName[fileName.length-1];
+                + "\nPhoto=" + fileName[fileName.length-1]
+                + "\n Date of Birth= "+dob;
     }
     
     
