@@ -78,6 +78,8 @@ public class UserFormPanel extends javax.swing.JPanel {
 
             }
         });
+        
+        textDateofBirth.setEditable(false);
     }
 
     /**
